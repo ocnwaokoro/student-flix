@@ -15,10 +15,9 @@ export default async function handler(
   
   const videoInfo = await ytdl.getInfo(videoUrl);
   const format = ytdl.chooseFormat(videoInfo.formats, { quality: 'highestvideo' });
-  console.log(format)
   
   const videoStream = ytdl(videoUrl, { format });
   
   res.setHeader('Content-Type', 'video/mp4');
-  videoStream.pipe(res);
+  videoStream.pipe(res.status(200));
 }

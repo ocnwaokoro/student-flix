@@ -10,6 +10,7 @@ const userSchema =  new mongoose.Schema({
   sessions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Session', onDelete: 'cascade' }],
   accounts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Account', onDelete: 'cascade' }],
   favoriteIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', onDelete: 'cascade' }],
+  createdAt: Date,
 }, { timestamps: true });
 
 delete mongoose.connection.models['User'];
@@ -76,5 +77,6 @@ const MOVIE = mongoose.model('Movie', movieSchema);
 
 export {
   USER,
+  ACCOUNT,
   MOVIE
 }

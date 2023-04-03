@@ -20,7 +20,7 @@ export default async function handler(
 
   if (cachedImage) {
     res.setHeader('Content-Type', 'image/jpeg');
-    return res.send(cachedImage);
+    return res.status(200).send(cachedImage);
   }
 
   const videoUrl = `https://www.youtube.com/watch?v=${id}`;
@@ -31,5 +31,5 @@ export default async function handler(
   cache.set(id as NodeCache.Key, Buffer.from(image.data));
 
   res.setHeader('Content-Type', 'image/jpeg');
-  res.send(Buffer.from(image.data));
+  res.status(200).send(Buffer.from(image.data));
 }

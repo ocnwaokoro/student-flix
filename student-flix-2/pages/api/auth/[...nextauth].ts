@@ -1,12 +1,12 @@
-import { USER } from "@/data/db.js";
+import { ACCOUNT, USER } from "@/data/db.js";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
-import clientPromise from "@/lib/mongodb"
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "@/lib/mongodb";
 
 // Github & Google providers create objects w/o createdAt or updatedAt attributes. How to fix??
 
@@ -61,7 +61,7 @@ export default NextAuth({
   pages: {
     signIn: "/auth",
   },
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV !== "development",
   session: {
     strategy: "jwt",
   },
@@ -69,4 +69,24 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      const isAllowedToSignIn = true;
+      if (isAllowedToSignIn) {
+        const _user = await USER.findOne({email: user?.email});
+        console.log(_user?.createdAt)
+        if (_user && !_user?.hasOwnProperty("__v")) {
+          (await USER.findOneAndUpdate({email: user?.email}, {..._user, __v: 0}));
+          (await USER.findOneAndUpdate({email: user?.email}, {$set: {createdAt: Date.now()}}));
+
+        }
+        return true;
+      } else {
+        // Return false to display a default error message
+        return true;
+        // Or you can return a URL to redirect to:
+        // return '/unauthorized'
+      }
+    },
+  },
 });
