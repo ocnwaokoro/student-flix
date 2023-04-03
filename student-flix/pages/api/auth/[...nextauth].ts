@@ -1,12 +1,13 @@
-import { USER } from "@/data/db.js";
+import { ACCOUNT, USER } from "@/data/db.js";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
-import clientPromise from "@/lib/mongodb"
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "@/lib/mongodb";
+import mongoose from "mongoose";
 
 // Github & Google providers create objects w/o createdAt or updatedAt attributes. How to fix??
 
@@ -61,7 +62,7 @@ export default NextAuth({
   pages: {
     signIn: "/auth",
   },
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV !== "development",
   session: {
     strategy: "jwt",
   },
@@ -69,4 +70,31 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      const isAllowedToSignIn = true;
+      // if duplicate email b/c two auth forms use same email, resolve issue or set user to same user and account.userid to same userid
+      if (isAllowedToSignIn) {
+        if (!user?.hasOwnProperty("__v")) {
+          // successfully converts OAuth user into mongoose user
+          const _user: mongoose.Document = await USER.create({
+            name: user.name,
+            image: user.image,
+            emailVerified: new Date(),
+          }); 
+          const {_id, ...__user} = _user.toObject()
+          await _user.deleteOne()
+          Object.assign(user, {...__user})
+          console.log(account?.provider,'user',user?.email,'added')
+        }
+
+        return true;
+      } else {
+        // Return false to display a default error message
+        return true;
+        // Or you can return a URL to redirect to:
+        // return '/unauthorized'
+      }
+    },
+  },
 });

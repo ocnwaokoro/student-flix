@@ -10,6 +10,7 @@ const userSchema =  new mongoose.Schema({
   sessions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Session', onDelete: 'cascade' }],
   accounts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Account', onDelete: 'cascade' }],
   favoriteIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', onDelete: 'cascade' }],
+  createdAt: Date,
 }, { timestamps: true });
 
 delete mongoose.connection.models['User'];
@@ -55,6 +56,8 @@ const VERIFICATION_TOKEN = mongoose.model('VerificationToken', verificationToken
 
 verificationTokenSchema.index({ identifier: 1, token: 1 }, { unique: true });
 
+// allow section for video source (source = enum[youtube, cdn, etc.])
+// add function on play that if youtube, use SWR & fetcher fn to retrieve cashed data if it is there or generate new
 const movieSchema =  new mongoose.Schema({
   title: String,
   description: String,
@@ -64,9 +67,16 @@ const movieSchema =  new mongoose.Schema({
   duration: String,
 });
 
+// auto generate duration in form
+// movie metadata document can record likes, dislikes, views
+// use axios to check all file components & validate if there is really a video or img there before adding the links to the db
+// command to check all documents in movie db & delete those that no longer work
+
 delete mongoose.connection.models['Movie'];
 const MOVIE = mongoose.model('Movie', movieSchema);
 
 export {
-  USER
+  USER,
+  ACCOUNT,
+  MOVIE
 }

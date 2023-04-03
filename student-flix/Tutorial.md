@@ -35,3 +35,9 @@ OverwriteModelError: Cannot overwrite `User` model once compiled.
     at async DevServer.handleRequestImpl (/Users/ocnwaokoro/Documents/GitHub/student-flix/student-flix/node_modules/next/dist/server/base-server.js:375:20)
     at async /Users/ocnwaokoro/Documents/GitHub/student-flix/student-flix/node_modules/next/dist/server/base-server.js:157:99
 ```
+
+https://www.npmjs.com/package/node-cache
+
+similar to argo app?
+
+big help: https://www.youtube.com/watch?v=mqUN4N2q4qY&list=TLPQMzAwMzIwMjNb_XB_8bC8AQ&index=2&ab_channel=CodeWithAntonio

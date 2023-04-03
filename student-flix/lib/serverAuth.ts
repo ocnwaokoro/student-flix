@@ -1,6 +1,7 @@
 import { NextApiRequest } from "next";
 import { getSession } from "next-auth/react";
 import { USER } from "@/data/db";
+// call before every route?
 
 const serverAuth = async (req: NextApiRequest) => {
     // use ServerAuth in API controller & request param will hold the jwt that the getSession can use to get logged in user
@@ -10,8 +11,8 @@ const serverAuth = async (req: NextApiRequest) => {
         throw new Error('Not signed in')
     }
 
-    const currentUser  = await USER.find({email: session.user.email})
-
+    const currentUser  = (await (await USER.find({email: session.user.email})).at(0)
+)
     if(!currentUser) {
         throw new Error('Not signed in')
     }

@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
+// center box needs tighter angles on the corners
+// validate email / password inputs to require certain constraints
+
 const Auth = () => {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -32,7 +35,7 @@ const Auth = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [email, password]);
+  }, [email, password, router]);
 
   const register = useCallback(async () => {
     try {
@@ -86,7 +89,7 @@ const Auth = () => {
             </div>
             <button
               onClick={variant === "login" ? login : register}
-              className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition"
+              className="bg-[#8900e1] py-3 text-white rounded-md w-full mt-10 hover:bg-[#57068c] transition"
             >
               {variant === "login" ? "Sign in" : "Register"}
             </button>
