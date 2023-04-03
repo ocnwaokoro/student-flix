@@ -19,5 +19,5 @@ export default async function handler(
   const videoStream = ytdl(videoUrl, { format });
   
   res.setHeader('Content-Type', 'video/mp4');
-  videoStream.pipe(res.status(200));
+  videoStream.pipe(res);
 }

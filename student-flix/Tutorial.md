@@ -41,3 +41,6 @@ https://www.npmjs.com/package/node-cache
 similar to argo app?
 
 big help: https://www.youtube.com/watch?v=mqUN4N2q4qY&list=TLPQMzAwMzIwMjNb_XB_8bC8AQ&index=2&ab_channel=CodeWithAntonio
+
+
+Be sure to include https:// before every link to ensure that the page is always secure
