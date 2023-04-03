@@ -7,6 +7,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
+import mongoose from "mongoose";
 
 // Github & Google providers create objects w/o createdAt or updatedAt attributes. How to fix??
 
@@ -73,13 +74,19 @@ export default NextAuth({
     async signIn({ user, account, profile, email, credentials }) {
       const isAllowedToSignIn = true;
       if (isAllowedToSignIn) {
-        const _user = await USER.findOne({email: user?.email});
-        console.log(_user?.createdAt)
-        if (_user && !_user?.hasOwnProperty("__v")) {
-          (await USER.findOneAndUpdate({email: user?.email}, {..._user, __v: 0}));
-          (await USER.findOneAndUpdate({email: user?.email}, {$set: {createdAt: Date.now()}}));
-
+        if (!user?.hasOwnProperty("__v")) {
+          // successfully converts OAuth user into mongoose user
+          const _user: mongoose.Document = await USER.create({
+            name: user.name,
+            image: user.image,
+            emailVerified: new Date(),
+          }); 
+          const {_id, ...__user} = _user.toObject()
+          await _user.deleteOne()
+          Object.assign(user, {...__user})
+          console.log(account?.provider,'user',user?.email,'added')
         }
+
         return true;
       } else {
         // Return false to display a default error message
