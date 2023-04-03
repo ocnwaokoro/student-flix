@@ -14,7 +14,7 @@ export default async function handler(
   const videoUrl = `https://www.youtube.com/watch?v=${id}`;
   
   const videoInfo = await ytdl.getInfo(videoUrl);
-  const format = ytdl.chooseFormat(videoInfo.formats, { quality: 'highestvideo' });
+  const format = ytdl.chooseFormat(videoInfo.formats, { filter: 'audioandvideo', quality: 'highestvideo' });
   
   const videoStream = ytdl(videoUrl, { format });
   

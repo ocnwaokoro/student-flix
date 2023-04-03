@@ -73,6 +73,7 @@ export default NextAuth({
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       const isAllowedToSignIn = true;
+      // if duplicate email b/c two auth forms use same email, resolve issue or set user to same user and account.userid to same userid
       if (isAllowedToSignIn) {
         if (!user?.hasOwnProperty("__v")) {
           // successfully converts OAuth user into mongoose user
