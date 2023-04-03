@@ -17,6 +17,7 @@
     "bcryptjs": "^2.4.3",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
+    "lodash": "^4.17.21",
     "mongodb": "^4.14.0",
     "mongoose": "^7.0.3",
     "next": "13.2.4",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/lodash": "^4.14.192",
     "autoprefixer": "^10.4.14",
     "depcheck": "^1.4.3",
     "postcss": "^8.4.21",

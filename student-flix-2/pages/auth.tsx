@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
+// center box needs tighter angles on the corners
+// validate email / password inputs to require certain constraints
+
 const Auth = () => {
   const router = useRouter();
   const [name, setName] = useState("");

@@ -6,4 +6,6 @@ declare global{
     }
 }
 
+// logo primary color etc used here
+
 export {}
