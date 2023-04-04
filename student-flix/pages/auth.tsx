@@ -28,9 +28,8 @@ const Auth = () => {
       await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/auth",
+        callbackUrl: "/profiles",
       });
-      router.push('/profiles')
     } catch (error) {
       console.log(error);
     }
