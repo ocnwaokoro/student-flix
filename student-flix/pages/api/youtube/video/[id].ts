@@ -29,6 +29,4 @@ export default async function handler(
     // Using Next.js, so use Next.js's `send` method to send the response
     videoStream.pipe(res);
   }
-
-  videoStream.pipe(res);
 }
