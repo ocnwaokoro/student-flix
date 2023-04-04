@@ -9,6 +9,7 @@ import { FaGithub } from "react-icons/fa";
 
 // center box needs tighter angles on the corners
 // validate email / password inputs to require certain constraints
+// fix all auth routes and get rid of github auth b/c
 
 const Auth = () => {
   const router = useRouter();
