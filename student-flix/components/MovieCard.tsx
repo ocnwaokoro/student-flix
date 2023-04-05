@@ -11,6 +11,7 @@ import FavoriteButton from "./FavoriteButton";
 
 // add functionality to only display new if movie added in past 7 days
 // if on left of screen move right, if on right of screen move left
+// if src or poster links fail, remove content
 
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
   //         {" movieCard position should change relative to the card's position on screen"}

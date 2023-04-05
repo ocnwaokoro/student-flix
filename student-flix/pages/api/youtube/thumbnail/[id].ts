@@ -24,12 +24,18 @@ export default async function handler(
   }
 
   const videoUrl = `https://www.youtube.com/watch?v=${id}`;
-  const videoInfo = await ytdl.getInfo(videoUrl);
-  const thumbnailUrl = videoInfo.videoDetails.thumbnails[videoInfo.videoDetails.thumbnails.length - 1].url;
-  
-  const image = await axios.get(thumbnailUrl, { responseType: 'arraybuffer' });
-  cache.set(id as NodeCache.Key, Buffer.from(image.data));
 
-  res.setHeader('Content-Type', 'image/jpeg');
-  res.status(200).send(Buffer.from(image.data));
+  try {
+    const videoInfo = await ytdl.getInfo(videoUrl);
+    const thumbnailUrl = videoInfo.videoDetails.thumbnails[videoInfo.videoDetails.thumbnails.length - 1].url;
+    
+    const image = await axios.get(thumbnailUrl, { responseType: 'arraybuffer' });
+    cache.set(id as NodeCache.Key, Buffer.from(image.data));
+  
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.status(300).redirect(thumbnailUrl)
+  } catch (error) {
+    console.log(error)
+    res.status(400).end()
+  }
 }

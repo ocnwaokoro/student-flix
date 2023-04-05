@@ -24,25 +24,33 @@ export default async function handler(
 
   const { id } = req.query
   const videoUrl = `https://www.youtube.com/watch?v=${id}`;
+  try {
+    /* does not work for now
+    const videoInfo = await ytdl.getInfo(videoUrl);
+    const format = ytdl.chooseFormat(videoInfo.formats, { filter: 'audioandvideo', quality: 'highestvideo' });
+    
+    const videoStream = ytdl(videoUrl, { format });
+    
+    res.setHeader('Content-Type', 'video/mp4');
   
-  const videoInfo = await ytdl.getInfo(videoUrl);
-  const format = ytdl.chooseFormat(videoInfo.formats, { filter: 'audioandvideo', quality: 'highestvideo' });
+    const uploadParams = {
+      Bucket: process.env.AWS_BUCKET as string,
+      Key: `${id}.mp4`,
+      Body: videoStream,
+      ContentType: 'video/mp4'
+    }
   
-  const videoStream = ytdl(videoUrl, { format });
+    await s3.upload(uploadParams).promise();
   
-  res.setHeader('Content-Type', 'video/mp4');
-
-  const uploadParams = {
-    Bucket: process.env.AWS_BUCKET as string,
-    Key: `${id}.mp4`,
-    Body: videoStream,
-    ContentType: 'video/mp4'
+    const redirectUrl = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${uploadParams.Key}`
+    // for security reasons, ensure that the video url is not viewable and that the address cannot be copied
+    */
+    const redirectUrl = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/Tp_YZNqNBhw.mp4`
+  // input redirect to test video page until bug fixed
+    res.status(300).redirect(redirectUrl)
+  } catch (error) {
+    console.log(error)
+    res.status(400).end()
   }
-
-  await s3.upload(uploadParams).promise();
-
-  const redirectUrl = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${uploadParams.Key}`
-
-  res.status(300).redirect(redirectUrl)
 
 }
