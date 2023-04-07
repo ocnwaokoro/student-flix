@@ -31,7 +31,7 @@ const Profiles = () => {
           Welcome {user?.name}
         </h1>
         <div className="flex items-center justify-center gap-8 mt-10">
-          <div onClick={() => router.push("/")}>
+          <div onClick={() => router.push("/upload")}>
             <div className="group flex-row w-44 mx-auto text-center">
               <div
                 className="

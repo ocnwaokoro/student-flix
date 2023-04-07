@@ -8,7 +8,7 @@ import fetcher from "@/lib/fetcher";
 import axios from "axios";
 import email from "next-auth/providers/email";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ytdl from "ytdl-core";
 
 /*
@@ -42,58 +42,50 @@ const Upload = () => {
   }, []);
   // add functionality for validating all input!
 
-  const upload = useCallback(async () => {
-    try {
-      if (variant === "youtube") {
-        const handleYoutubeLink = async (movieLink: string) => {
-          const regex = /(?:v=)([\w-]{11})/;
-          const match = movieLink.match(regex);
-          const videoId = match?.[1];
-          console.log(videoId);
-          return videoId;
-        };
+  const [isReadyToUpload, setIsReadyToUpload] = useState(false);
 
-        const videoId = await handleYoutubeLink(movieLink);
+useEffect(() => {
+  if (videoUrl && thumbnailUrl) {
+    setIsReadyToUpload(true);
+  }
+}, [videoUrl, thumbnailUrl]);
 
-        const videoUrl = `/api/youtube/video/${videoId}`;
-        const thumbnailUrl = `/api/youtube/thumbnail/${videoId}`;
-        const duration = await (
+const upload = useCallback(async () => {
+  if (variant === "youtube") {
+    const handleYoutubeLink = async (movieLink: string) => {
+      const regex = /(?:v=)([\w-]{11})/;
+      const match = movieLink.match(regex);
+      const videoId = match?.[1];
+      console.log(videoId);
+      await setVideoUrl(`/api/youtube/video/${videoId}`);
+      await setThumbnailUrl(`/api/youtube/thumbnail/${videoId}`);
+      await setDuration(
+        await (
           await axios.get(`/api/youtube/duration/${videoId}`)
-        ).data;
+        ).data
+      );
+    };
 
-        await axios.post("/api/upload", {
-          title,
-          description,
-          videoUrl,
-          thumbnailUrl,
-          genre,
-          duration,
-        });
-      } else {
-        await axios.post("/api/upload", {
-          title,
-          description,
-          videoUrl,
-          thumbnailUrl,
-          genre,
-          duration,
-        });
-      }
+    await handleYoutubeLink(movieLink);
+  }
 
+  if (isReadyToUpload) {
+    try {
+      await axios.post("/api/upload", {
+        title,
+        description,
+        videoUrl,
+        thumbnailUrl,
+        genre,
+        duration,
+      });
       router.push("/");
     } catch (error) {
       console.log(error);
     }
-  }, [
-    title,
-    description,
-    videoUrl,
-    thumbnailUrl,
-    genre,
-    duration,
-    movieLink,
-    variant,
-  ]);
+  }
+}
+, [title, description, videoUrl, thumbnailUrl, genre, duration, movieLink, variant, ]);
 
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.png')] bg-no-repeat bg-center bg-fixed bg-cover">

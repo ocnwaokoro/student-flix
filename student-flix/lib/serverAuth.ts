@@ -8,12 +8,14 @@ const serverAuth = async (req: NextApiRequest) => {
     const session  = await getSession({ req });
     
     if(!session?.user?.email) {
+        console.log('no email')
         throw new Error('Not signed in')
     }
 
-    const currentUser  = (await (await USER.find({email: session.user.email})).at(0)
-)
+    const currentUser  = await USER.findOne({email: session.user.email})
+
     if(!currentUser) {
+        console.log('no user signed in!!!')
         throw new Error('Not signed in')
     }
 

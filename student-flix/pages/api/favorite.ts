@@ -20,7 +20,7 @@ export default async function handler(
 
       const user = await USER.findOneAndUpdate(
         { email: currentUser?.email },
-        { $push: { favoriteIds: existingMovie.id } }
+        { $push: { favoriteIds: existingMovie._id } }
       );
 
       return res.status(200).json(user);
@@ -36,7 +36,7 @@ export default async function handler(
 
       const updatedUser = await USER.findOneAndUpdate(
         { email: currentUser?.email },
-        { $pull: { favoriteIds: existingMovie.id } }
+        { $pull: { favoriteIds: existingMovie._id } }
       );
       return res.status(200).json(updatedUser);
     }

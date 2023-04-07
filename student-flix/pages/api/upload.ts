@@ -12,10 +12,11 @@ export default async function handler(
   try {
     const { title, description, videoUrl, thumbnailUrl, genre, duration } =
       req.body;
-
+    console.log(req.body)
     const existingMovie = await MOVIE.findOne({ videoUrl: videoUrl });
 
     if (existingMovie) {
+    console.log('existingMovie: ' ,existingMovie);
       return res.status(422).json({ error: "videoUrl already in use" });
     }
 
