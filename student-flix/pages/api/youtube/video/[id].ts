@@ -3,6 +3,7 @@ import serverAuth from "@/lib/serverAuth";
 import ytdl from 'ytdl-core';
 import { send } from 'micro';
 import AWS from 'aws-sdk'
+import axios from "axios";
 const s3 = new AWS.S3(
   {
     accessKeyId: process.env.AWS_ID,
@@ -24,8 +25,19 @@ export default async function handler(
 
   const { id } = req.query
   const videoUrl = `https://www.youtube.com/watch?v=${id}`;
+
+  if (await (async () => {
+    try {
+      const response = await axios.get(`https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${id}.mp4`);
+      return response.status === 200;
+    } catch (error) {
+        return false;      
+    }
+  })()) {
+    res.status(300).redirect(`https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${id}.mp4`)
+  } else {
   try {
-    /* does not work for now
+    // does not work for now
     const videoInfo = await ytdl.getInfo(videoUrl);
     const format = ytdl.chooseFormat(videoInfo.formats, { filter: 'audioandvideo', quality: 'highestvideo' });
     
@@ -44,13 +56,14 @@ export default async function handler(
   
     const redirectUrl = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/${uploadParams.Key}`
     // for security reasons, ensure that the video url is not viewable and that the address cannot be copied
-    */
-    const redirectUrl = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/Tp_YZNqNBhw.mp4`
+    
+    //const redirectUrl = `https://${process.env.AWS_BUCKET}.s3.amazonaws.com/Tp_YZNqNBhw.mp4`
   // input redirect to test video page until bug fixed
     res.status(300).redirect(redirectUrl)
   } catch (error) {
     console.log(error)
     res.status(400).end()
   }
+}
 
 }

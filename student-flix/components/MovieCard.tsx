@@ -2,6 +2,7 @@ import useInfoModal from "@/hooks/useInfoModal";
 import { BiChevronDown } from "react-icons/bi";
 import { useRouter } from "next/router";
 import React from "react";
+import Image from "next/image"
 interface MovieCardProps {
   data: Record<string, any>;
 }
