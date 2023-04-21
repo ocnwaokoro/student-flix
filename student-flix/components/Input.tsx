@@ -17,6 +17,7 @@ const Input: React.FC<InputProps> = ({id, onChange, value, label, type}) => {
         onChange = {onChange}
         value = {value}
         type = {type}
+        autoComplete="off"
 
         className="
                 block

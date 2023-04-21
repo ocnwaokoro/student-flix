@@ -37,8 +37,8 @@ next-env.d.ts
 
 .env
 student-flix/.env
-student-flix/.env
-student-flix/.env
-student-flix/.env
-student-flix/.env
-student-flix/.env
+
+/student-flix-2
+/student-flix-1
+/student-flix-scrap
+/student-flix-wip

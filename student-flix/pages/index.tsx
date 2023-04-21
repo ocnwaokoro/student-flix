@@ -43,7 +43,7 @@ export default function Home() {
       <Navbar />
       <div className="relative">
         <div className="absolute top-0 left-0">
-        <Billboard />
+        <Billboard autoPlay={false} />
         </div>
         <div className="absolute top-0 left-0 mt-[40%] hover:shadow-outline">
           <MovieList title="Trending Now" data={movies} />
