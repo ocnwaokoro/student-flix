@@ -4,12 +4,9 @@ big form w/ diff upload styles
 */
 
 import Dropdown from "@/components/Dropdown";
-import fetcher from "@/lib/fetcher";
 import axios from "axios";
-import email from "next-auth/providers/email";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import ytdl from "ytdl-core";
 
 /*
 
@@ -93,6 +90,7 @@ const Upload = () => {
     duration,
     movieLink,
     variant,
+    router
   ]);
 
   return (

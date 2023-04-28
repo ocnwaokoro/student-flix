@@ -1,8 +1,6 @@
 // source: https://authjs.dev/reference/adapter/mongodb
 
 import { MongoClient } from "mongodb"
-import { USER } from "@/data/db.js";
-
 
 if (!process.env.MONGODB_URI) {
   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')

@@ -9,7 +9,6 @@ const userSchema =  new mongoose.Schema({
   password: String,
   sessions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Session', onDelete: 'cascade' }],
   accounts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Account', onDelete: 'cascade' }],
-  favoriteIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie', onDelete: 'cascade' }],
   createdAt: Date,
 }, { timestamps: true });
 

@@ -1,5 +1,4 @@
 import useBillboard from "@/hooks/useBillboard";
-import useInfoModal from "@/hooks/useInfoModal";
 import React, { useCallback } from "react";
 import { AiOutlineInfoCircle } from 'react-icons/ai'
 import PlayButton from "./PlayButton";
@@ -10,10 +9,6 @@ const Billboard: React.FC<BillboardProps> = ({autoPlay}) => {
   const { data } = useBillboard();
   // change to include just preview
   // maybe video preview object component is needed??
-  const { openModal } = useInfoModal()
-  const handleOpenModal = useCallback(()=>{
-    openModal(data?._id)
-  },[openModal,data?._id])
   return (
     <div className="relative h-[56.25vw]">
       {autoPlay && <video
@@ -24,7 +19,7 @@ const Billboard: React.FC<BillboardProps> = ({autoPlay}) => {
         poster={data?.thumbnailUrl}
         src={data?.videoUrl}
       ></video>}
-      {!autoPlay && <img
+      {!autoPlay && <img alt="billboard"
         className="w-full h-[56.25vw] object-cover bright-[60%]"
         src={data?.thumbnailUrl}
       ></img>}
@@ -37,10 +32,6 @@ const Billboard: React.FC<BillboardProps> = ({autoPlay}) => {
         </p>
         <div className="flex flex-row items-center mt-4 md:mt-4 gap-3">
           <PlayButton movieId={data?._id}/>
-          <button onClick={handleOpenModal} className="bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition">
-            <AiOutlineInfoCircle className="mr-1"/>
-            More Info
-          </button>
         </div>
       </div>
     </div>

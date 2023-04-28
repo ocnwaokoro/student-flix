@@ -1,19 +1,12 @@
-import NavbarItem from "./NavbarItem";
-import { BsBell, BsChevronDown, BsSearch } from "react-icons/bs";
-import MobileMenu from "./MobileMenu";
+import { BsSearch } from "react-icons/bs";
 import {
   JSXElementConstructor,
   Key,
   ReactElement,
   ReactFragment,
   ReactPortal,
-  use,
-  useCallback,
-  useEffect,
   useState,
 } from "react";
-import AccountMenu from "./AccountMenu";
-import { MOVIE } from "@/data/db.js";
 import useSearchByTitle from "@/hooks/useSearchByTitle";
 import { useRouter } from "next/router";
 

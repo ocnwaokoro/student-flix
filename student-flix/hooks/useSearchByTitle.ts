@@ -7,9 +7,7 @@ const useSearchByTitle = (id?: string) => {
         revalidateOnFocus: false,
         revalidateOnReconnect: false
     })
-
-    console.log('MOVIE FOUND: ', data)
-
+    
     return {
         data,
         error,

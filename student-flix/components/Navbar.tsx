@@ -1,7 +1,7 @@
 import NavbarItem from "./NavbarItem";
 import { BsBell, BsChevronDown, BsSearch } from "react-icons/bs";
 import MobileMenu from "./MobileMenu";
-import { use, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AccountMenu from "./AccountMenu";
 import SearchButton from "./SearchButton";
 
@@ -9,12 +9,12 @@ const TOP_OFFSET = 66;
 
 const Navbar = () => {
   const links = {
-    Home: "/",
-    "TV Shows": "/tv",
-    Movies: "/movies",
-    "New & Popular": "/new",
-    "My List": "/list",
-    "Browse by Languages": "/languages",
+    "Home": "/",
+    "TV Shows": "/",
+    "Movies": "/",
+    "New & Popular": "/",
+    "My List": "/",
+    "Browse by Languages": "/",
   };
 
   const [showMobileMenu, setShowMobileMenu] = useState(false);

@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import serverAuth from "@/lib/serverAuth";
 import ytdl from 'ytdl-core';
-import { send } from 'micro';
 import AWS from 'aws-sdk'
 import axios from "axios";
 const s3 = new AWS.S3(
