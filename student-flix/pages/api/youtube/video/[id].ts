@@ -39,7 +39,7 @@ export default async function handler(
     const videoInfo = await ytdl.getInfo(videoUrl);
     const format = ytdl.chooseFormat(videoInfo.formats, { filter: 'audioandvideo', quality: 'highestvideo' });
     
-    const videoStream = ytdl(videoUrl, { format });
+    const videoStream = await ytdl(videoUrl, { format });
     
     res.setHeader('Content-Type', 'video/mp4');
   

@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import serverAuth from "@/lib/serverAuth";
 import ytdl from 'ytdl-core';
 import axios from 'axios';
 // cache image

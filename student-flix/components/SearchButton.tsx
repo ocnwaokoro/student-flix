@@ -18,16 +18,15 @@ const useSearch = () => {
     setQuery(newQuery);
   };
 
-  return { query, handleQueryChange, data, isLoading };
+  return { query, setQuery, handleQueryChange, data, isLoading };
 };
 
 const SearchButton = () => {
   const [visibleBar, setVisibleBar] = useState(false);
-  const { query, handleQueryChange, data, isLoading } = useSearch();
-  console.log(data);
-
+  const { query, setQuery, handleQueryChange, data, isLoading } = useSearch();
   const toggleSearchBar = () => {
     setVisibleBar(!visibleBar);
+    if(query) setQuery("");
   };
 
   const router = useRouter();
